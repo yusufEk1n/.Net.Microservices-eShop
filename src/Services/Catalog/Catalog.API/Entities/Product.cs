@@ -20,5 +20,7 @@ namespace Catalog.API.Entities
         public string ImageFile { get; set; }
         [BsonElement("product_price"), BsonRepresentation(BsonType.Decimal128)]
         public decimal Price { get; set; }
+
+        //Nullable property set 
     }
 }
