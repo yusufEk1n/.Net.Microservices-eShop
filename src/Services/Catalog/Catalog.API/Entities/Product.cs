@@ -8,17 +8,17 @@ namespace Catalog.API.Entities
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
-        [BsonElement("p_name")]
+        [BsonElement("product_name"), BsonRepresentation(BsonType.ObjectId)]
         public string Name { get; set; }
-        [BsonElement("p_category")]
+        [BsonElement("product_category"), BsonRepresentation(BsonType.String)]
         public string Category { get; set; }
-        [BsonElement("p_summary")]
+        [BsonElement("product_summary"), BsonRepresentation(BsonType.String)]
         public string Summary { get; set; }
-        [BsonElement("p_description")]
+        [BsonElement("product_description"), BsonRepresentation(BsonType.String)]
         public string Description { get; set; }
-        [BsonElement("p_imageFile")]
+        [BsonElement("product_imageFile"), BsonRepresentation(BsonType.String)]
         public string ImageFile { get; set; }
-        [BsonElement("p_price")]
+        [BsonElement("product_price"), BsonRepresentation(BsonType.Decimal128)]
         public decimal Price { get; set; }
     }
 }
