@@ -1,3 +1,4 @@
+using Catalog.API.Data.Interfaces;
 using Catalog.API.Entities;
 using MongoDB.Driver;
 

@@ -1,5 +1,6 @@
-using Catalog.API.Data;
+using Catalog.API.Data.Interfaces;
 using Catalog.API.Entities;
+using Catalog.API.Repositories.Interfaces;
 using MongoDB.Driver;
 
 namespace Catalog.API.Repositories
@@ -21,7 +22,7 @@ namespace Catalog.API.Repositories
                             .ToListAsync();
         }
 
-        public async Task<Product> GetProduct(string productId)
+        public async Task<Product> GetProductById(string productId)
         {
             FilterDefinition<Product> filter = Builders<Product>.Filter.Eq(p => p.Id, productId);
 
@@ -67,7 +68,7 @@ namespace Catalog.API.Repositories
             return updateProduct.IsAcknowledged && updateProduct.ModifiedCount > 0;
         }
 
-        public async Task<bool> DeleteProduct(string productId)
+        public async Task<bool> DeleteProductById(string productId)
         {
             FilterDefinition<Product> filter = Builders<Product>.Filter.Eq(p => p.Id, productId);
             

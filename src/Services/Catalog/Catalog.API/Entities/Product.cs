@@ -8,7 +8,7 @@ namespace Catalog.API.Entities
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
-        [BsonElement("product_name"), BsonRepresentation(BsonType.ObjectId)]
+        [BsonElement("product_name"), BsonRepresentation(BsonType.String)]
         public string Name { get; set; }
         [BsonElement("product_category"), BsonRepresentation(BsonType.String)]
         public string Category { get; set; }
@@ -20,7 +20,5 @@ namespace Catalog.API.Entities
         public string ImageFile { get; set; }
         [BsonElement("product_price"), BsonRepresentation(BsonType.Decimal128)]
         public decimal Price { get; set; }
-
-        //Nullable property set 
     }
 }
