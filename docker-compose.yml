@@ -3,8 +3,12 @@ version: '3.4'
 services:
   catalogdb:
     image: mongo
+
   basketdb:
-    image: redis
+    image: redis:alpine
+
+  portainer:
+    image: portainer/portainer-ce
 
   catalog.api:
     image: ${DOCKER_REGISTRY-}catalogapi
@@ -34,5 +38,7 @@ services:
       - REDIS_HOST=basketdb
       - REDIS_PORT=6379
       - REDIS_PASSWORD=
+
 volumes:
   mongo_data:
+  portainer_data:
