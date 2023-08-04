@@ -37,8 +37,8 @@ namespace Catalog.API.Data
             var dbHost = Environment.GetEnvironmentVariable("DB_HOST");
             var dbPort = Environment.GetEnvironmentVariable("DB_PORT");
             var dbName = Environment.GetEnvironmentVariable("DB_NAME");
-            var dbUserId = Environment.GetEnvironmentVariable("DB_USER_ID");
-            var dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD");
+            var dbUserId = Environment.GetEnvironmentVariable("MONGO_INITDB_ROOT_USERNAME");
+            var dbPassword = Environment.GetEnvironmentVariable("MONGO_INITDB_ROOT_PASSWORD");
 
             if (string.IsNullOrEmpty(dbUserId) || string.IsNullOrEmpty(dbPassword))
             {

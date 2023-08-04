@@ -22,12 +22,7 @@ services:
       - "80"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - DB_HOST=catalogdb
-      - DB_PORT=27017
-      - DB_NAME=ProductDb
-      - DB_COLLECTION_NAME=Products
-      - DB_USERID=
-      - DB_PASSWORD=
+      
 
   basket.api:
     image: ${DOCKER_REGISTRY-}basketapi
@@ -38,9 +33,6 @@ services:
       - "81"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - REDIS_HOST=basketdb
-      - REDIS_PORT=6379
-      - REDIS_PASSWORD=
 
 volumes:
   mongo_data:

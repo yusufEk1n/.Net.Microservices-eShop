@@ -8,10 +8,14 @@ services:
       - "27017:27017"
     volumes:
       - mongo_data:/data/db
+    # environment:
+      # - MONGO_INITDB_ROOT_USERNAME=root
+      # - MONGO_INITDB_ROOT_PASSWORD=example
 
   basketdb:
     container_name: basketdb
     restart: always
+    # command: redis-server --save 20 1 --loglevel warning --requirepass example
     ports:
       - "6379:6379"
 
@@ -37,13 +41,10 @@ services:
   catalog.api:
     container_name: catalog.api
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
       - DB_HOST=catalogdb
       - DB_PORT=27017
       - DB_NAME=ProductDb
       - DB_COLLECTION_NAME=Products
-      - DB_USERID=
-      - DB_PASSWORD=
     depends_on:
       - catalogdb
     ports:
@@ -55,7 +56,6 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - REDIS_HOST=basketdb
       - REDIS_PORT=6379
-      - REDIS_PASSWORD=
     depends_on:
       - basketdb
     ports:
