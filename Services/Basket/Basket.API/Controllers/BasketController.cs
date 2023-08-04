@@ -11,7 +11,7 @@ namespace Basket.API.Controllers
     {
         private readonly IBasketRepository _repository;
 
-        public BasketController(IBasketRepository repository, ILogger<BasketController> logger)
+        public BasketController(IBasketRepository repository)
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }

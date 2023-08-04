@@ -1,5 +1,8 @@
 using Basket.API.Repositories;
 using Basket.API.Repositories.Interfaces;
+using DotNetEnv;
+using Microsoft.Extensions.Configuration;
+using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +15,11 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddStackExchangeRedisCache(options =>
 {
-    options.Configuration = builder.Configuration.GetValue<string>("CacheSettings:RedisConnectionString");
+    Env.Load();
+    
+    var redisConfiguration = ConfigurationOptions.Parse(
+                $"{Environment.GetEnvironmentVariable("REDIS_HOST")}:{Environment.GetEnvironmentVariable("REDIS_PORT")}");
+    options.ConfigurationOptions = redisConfiguration;
 });
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 

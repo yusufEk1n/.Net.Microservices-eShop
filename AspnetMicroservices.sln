@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{4A7E168E-34B8-4E8C-811E-33ABABE2C9B5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Basket", "Basket", "{B1867066-1224-42E0-BACF-91194F50324F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basket.API", "Services\Basket\Basket.API\Basket.API.csproj", "{FE1CA1B9-DF1E-4965-811C-06721E8175AA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Catalog", "Catalog", "{361C8D1C-A4C8-441F-B4D1-276220441154}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catalog.API", "Services\Catalog\Catalog.API\Catalog.API.csproj", "{BD0DDAB7-6088-4194-9BC7-125445FEF156}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FE1CA1B9-DF1E-4965-811C-06721E8175AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE1CA1B9-DF1E-4965-811C-06721E8175AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE1CA1B9-DF1E-4965-811C-06721E8175AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE1CA1B9-DF1E-4965-811C-06721E8175AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD0DDAB7-6088-4194-9BC7-125445FEF156}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD0DDAB7-6088-4194-9BC7-125445FEF156}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD0DDAB7-6088-4194-9BC7-125445FEF156}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD0DDAB7-6088-4194-9BC7-125445FEF156}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B1867066-1224-42E0-BACF-91194F50324F} = {4A7E168E-34B8-4E8C-811E-33ABABE2C9B5}
+		{FE1CA1B9-DF1E-4965-811C-06721E8175AA} = {B1867066-1224-42E0-BACF-91194F50324F}
+		{361C8D1C-A4C8-441F-B4D1-276220441154} = {4A7E168E-34B8-4E8C-811E-33ABABE2C9B5}
+		{BD0DDAB7-6088-4194-9BC7-125445FEF156} = {361C8D1C-A4C8-441F-B4D1-276220441154}
+	EndGlobalSection
+EndGlobal
