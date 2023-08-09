@@ -21,7 +21,7 @@ services:
 
   discountdb:
     container_name: discountdb
-    environment:  
+    environment:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=admin1234
       - POSTGRES_DB=DiscountDb
@@ -68,10 +68,22 @@ services:
   basket.api:
     container_name: basket.api
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
       - REDIS_HOST=basketdb
       - REDIS_PORT=6379
     depends_on:
       - basketdb
     ports:
       - "8002:80"
+
+  discount.api:
+    container_name: discount.api
+    environment:
+      - POSTGRES_HOST=discountdb
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin1234
+      - POSTGRES_DB=DiscountDb
+    depends_on:
+      - discountdb
+    ports:
+      - "8003:80"
