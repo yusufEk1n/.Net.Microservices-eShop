@@ -2,17 +2,11 @@
 using Discount.API.Entities;
 using Discount.API.Repositories.Interfaces;
 using Npgsql;
-using DotNetEnv;
 
 namespace Discount.API.Repositories
 {
     public class DiscountRepository : IDiscountRepository
     {
-        public DiscountRepository()
-        {
-            Env.Load();
-        }
-
         public async Task<Coupon> GetDiscount(string productName)
         {
             string connectionString = BuildConnectionString();
