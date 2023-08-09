@@ -2,15 +2,21 @@
 using Discount.API.Entities;
 using Discount.API.Repositories.Interfaces;
 using Npgsql;
-using System.Diagnostics;
+using DotNetEnv;
 
 namespace Discount.API.Repositories
 {
     public class DiscountRepository : IDiscountRepository
     {
+        public DiscountRepository()
+        {
+            Env.Load();
+        }
+
         public async Task<Coupon> GetDiscount(string productName)
         {
-            using var connection = new NpgsqlConnection(getConnectionString());
+            string connectionString = BuildConnectionString();
+            using var connection = new NpgsqlConnection(connectionString);
 
             var coupon = await connection.QueryFirstOrDefaultAsync<Coupon>
                 ("SELECT * FROM Coupon WHERE ProductName = @productName", new { ProductName = productName });
@@ -21,7 +27,8 @@ namespace Discount.API.Repositories
 
         public async Task<bool> CreateDiscount(Coupon coupon)
         {
-            using var connection = new NpgsqlConnection(getConnectionString());
+            string connectionString = BuildConnectionString();
+            using var connection = new NpgsqlConnection(connectionString);
 
             var couponAffected = await connection.ExecuteAsync
                 ("INSERT INTO Coupon (ProductName, Description, Amount) VALUES (@ProductName, @Description, @Amount)",
@@ -29,12 +36,14 @@ namespace Discount.API.Repositories
 
             return couponAffected == 1 ? true : false;
         }
+
         public async Task<bool> UpdateDiscount(Coupon coupon)
         {
-            using var connection = new NpgsqlConnection(getConnectionString());
+            string connectionString = BuildConnectionString();
+            using var connection = new NpgsqlConnection(connectionString);
 
             var couponUpdated = await connection.ExecuteAsync
-                ("UPDATE FROM Coupon SET ProductName = @ProductName, Description = @Description, Amount = @Amount WHERE Id = @Id",
+                ("UPDATE Coupon SET ProductName = @ProductName, Description = @Description, Amount = @Amount WHERE Id = @Id",
                     new { ProductName = coupon.ProductName, Description = coupon.Description, Amount = coupon.Amount, Id = coupon.Id });
 
             return couponUpdated == 1 ? true : false;
@@ -42,7 +51,8 @@ namespace Discount.API.Repositories
 
         public async Task<bool> DeleteDiscount(string productName)
         {
-            using var connection = new NpgsqlConnection(getConnectionString());
+            string connectionString = BuildConnectionString();
+            using var connection = new NpgsqlConnection(connectionString);
 
             var couponDeleted = await connection.ExecuteAsync
                 ("DELETE FROM Coupon WHERE ProductName = @ProductName", new { ProductName = productName });
@@ -50,13 +60,20 @@ namespace Discount.API.Repositories
             return couponDeleted == 1 ? true : false;
         }
 
-        private string getConnectionString()
+        private string BuildConnectionString()
         {
-            return $"Server={Environment.GetEnvironmentVariable("POSTGRES_HOST")};" +
-                   $"Port={Environment.GetEnvironmentVariable("POSTGRES_PORT")};" +
-                   $"Database={Environment.GetEnvironmentVariable("POSTGRES_DB")};" +
-                   $"User Id={Environment.GetEnvironmentVariable("POSTGRES_USER")};" +
-                   $"Password={Environment.GetEnvironmentVariable("POSTGRES_PASSWORD")}";
+            var dbHost = Environment.GetEnvironmentVariable("POSTGRES_HOST");
+            var dbPort = Environment.GetEnvironmentVariable("POSTGRES_PORT");
+            var dbName = Environment.GetEnvironmentVariable("POSTGRES_DB");
+            var dbUser = Environment.GetEnvironmentVariable("POSTGRES_USER");
+            var dbPassword = Environment.GetEnvironmentVariable("POSTGRES_PASSWORD");
+
+            if (string.IsNullOrEmpty(dbUser) || string.IsNullOrEmpty(dbPassword))
+            {
+                return $"Server={dbHost}; Port={dbPort}; Database={dbName}";
+            }
+
+            return $"Server={dbHost}; Port={dbPort}; Database={dbName}; User Id={dbUser}; Password={dbPassword}";
         }
     }
 }
