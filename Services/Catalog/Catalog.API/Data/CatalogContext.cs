@@ -7,11 +7,17 @@ namespace Catalog.API.Data
 {
     public class CatalogContext : ICatalogContext
     {
+        private enum ConnectionType
+        {
+            Unencrypted,
+            Encrypted
+        }
+
         public IMongoCollection<Product> Products { get; }
         public CatalogContext()
         {
             InitializeEnvironmentVariables();
-            var connectionString = BuildConnectionString();
+            var connectionString = BuildConnectionString(ConnectionType.Unencrypted);
 
             var client = new MongoClient(connectionString);
             var database = client.GetDatabase(Environment.GetEnvironmentVariable("DB_NAME"));
@@ -32,7 +38,7 @@ namespace Catalog.API.Data
             }
         }
 
-        private string BuildConnectionString()
+        private string BuildConnectionString(ConnectionType connectionType)
         {
             var dbHost = Environment.GetEnvironmentVariable("DB_HOST");
             var dbPort = Environment.GetEnvironmentVariable("DB_PORT");
@@ -40,12 +46,18 @@ namespace Catalog.API.Data
             var dbUserId = Environment.GetEnvironmentVariable("MONGO_INITDB_ROOT_USERNAME");
             var dbPassword = Environment.GetEnvironmentVariable("MONGO_INITDB_ROOT_PASSWORD");
 
-            if (string.IsNullOrEmpty(dbUserId) || string.IsNullOrEmpty(dbPassword))
+            if (connectionType == ConnectionType.Unencrypted)
             {
                 return $"mongodb://{dbHost}:{dbPort}";
             }
-
-            return $"mongodb://{dbUserId}:{dbPassword}@{dbHost}:{dbPort}/{dbName}?authSource=admin";
+            else if (connectionType == ConnectionType.Encrypted)
+            {
+                return $"mongodb://{dbUserId}:{dbPassword}@{dbHost}:{dbPort}/{dbName}?authSource=admin";
+            }
+            else
+            {
+                throw new ArgumentException("Geçersiz baðlantý türü.", nameof(connectionType));
+            }
         }
     }
 }
