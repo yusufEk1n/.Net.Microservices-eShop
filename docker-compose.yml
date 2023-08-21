@@ -48,7 +48,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
   
   discount.grpc:
-    image: ${DOCKER_REGISTRY}discountgrpc
+    image: ${DOCKER_REGISTRY-}discountgrpc
     build:
       context: .
       dockerfile: Services/Discount/Discount.Grpc/Dockerfile
