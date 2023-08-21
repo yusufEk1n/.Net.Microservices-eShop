@@ -46,6 +46,14 @@ services:
       - "82"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+  
+  discount.grpc:
+    image: ${DOCKER_REGISTRY}discountgrpc
+    build:
+      context: .
+      dockerfile: Services/Discount/Discount.Grpc/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
 
 volumes:
   mongo_data:
