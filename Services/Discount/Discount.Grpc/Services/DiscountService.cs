@@ -1,4 +1,6 @@
-﻿using Discount.Grpc.Protos;
+﻿using AutoMapper;
+using Discount.Grpc.Entities;
+using Discount.Grpc.Protos;
 using Discount.Grpc.Repositories.Interfaces;
 using Grpc.Core;
 
@@ -8,11 +10,13 @@ namespace Discount.Grpc.Services
     {
         private readonly ILogger<DiscountService> _logger;
         private readonly IDiscountRepository _repository;
+        private readonly IMapper _mapper;
 
-        public DiscountService(ILogger<DiscountService> logger, IDiscountRepository repository)
+        public DiscountService(ILogger<DiscountService> logger, IDiscountRepository repository, IMapper mapper)
         {
             _logger = logger ?? throw new ArgumentException(nameof(logger));
             _repository = repository ?? throw new ArgumentException(nameof(repository));
+            _mapper = mapper ?? throw new ArgumentException(nameof(mapper));
         }
 
         public override async Task<CouponModel> GetDiscount(GetDiscountRequest request, ServerCallContext context)
@@ -26,24 +30,12 @@ namespace Discount.Grpc.Services
 
             _logger.LogInformation("Discount is retrieved for ProductName: {productName}, Amount: {amount}", coupon.ProductName, coupon.Amount);
 
-            return new CouponModel
-            {
-                Id = coupon.Id,
-                ProductName = coupon.ProductName,
-                Amount = coupon.Amount,
-                Description = coupon.Description,
-            };
+            return _mapper.Map<CouponModel>(coupon);
         }
 
         public override async Task<CouponModel> CreateDiscount(CreateDiscountRequest request, ServerCallContext context)
         {
-            var couponAffected = await _repository.CreateDiscount(new Entities.Coupon
-            {
-                Id = request.Coupon.Id,
-                ProductName = request.Coupon.ProductName,
-                Amount = request.Coupon.Amount,
-                Description = request.Coupon.Description,
-            });
+            var couponAffected = await _repository.CreateDiscount(_mapper.Map<Coupon>(request.Coupon));
 
             if(!couponAffected)
             {
@@ -57,13 +49,7 @@ namespace Discount.Grpc.Services
 
         public override async Task<CouponModel> UpdateDiscount(UpdateDiscountRequest request, ServerCallContext context)
         {
-            var couponUpdated = await _repository.UpdateDiscount(new Entities.Coupon
-            {
-                Id = request.Coupon.Id,
-                ProductName = request.Coupon.ProductName,
-                Amount = request.Coupon.Amount,
-                Description = request.Coupon.Description,
-            });
+            var couponUpdated = await _repository.UpdateDiscount(_mapper.Map<Coupon>(request.Coupon));
 
             if(!couponUpdated)
             {
