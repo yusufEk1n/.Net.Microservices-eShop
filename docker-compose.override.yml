@@ -70,7 +70,7 @@ services:
     environment:
       - REDIS_HOST=basketdb
       - REDIS_PORT=6379
-      - "GrpcSettings:DiscountUrl=discount.grpc"
+      - "GrpcSettings:DiscountUrl=http://discount.grpc"
     depends_on:
       - basketdb
     ports:
