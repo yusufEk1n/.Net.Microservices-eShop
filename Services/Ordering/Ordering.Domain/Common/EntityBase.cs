@@ -5,7 +5,7 @@ using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ordering.Domain.SeedWork
+namespace Ordering.Domain.Common
 {
     public abstract class EntityBase
     {
