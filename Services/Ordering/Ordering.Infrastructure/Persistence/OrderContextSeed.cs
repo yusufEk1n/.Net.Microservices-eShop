@@ -12,7 +12,7 @@ namespace Ordering.Infrastructure.Persistence
     {
         public static async Task SeedAsync(OrderContext context, ILogger<OrderContextSeed> logger)
         {
-            if (context.Orders.Any())
+            if (!context.Orders.Any())
             {
                 context.Orders.AddRange(GetPreConfiguredOrders());
                 await context.SaveChangesAsync();
@@ -24,7 +24,7 @@ namespace Ordering.Infrastructure.Persistence
         {
             return new List<Order>
             {
-                new Order() { UserName = "kmn", FirstName = "Yusuf", LastName = "Ekin", EmailAdress = "yusuf@gmail.com", AdressLine = "Istanbul", Country = "Turkey", TotalPrice = 350 }
+                new Order() { UserName = "kmn", FirstName = "Yusuf", LastName = "Ekin", EmailAdress = "yusuf@gmail.com", AdressLine = "Istanbul", Country = "Turkey", State = "Istanbul", Zipcode = "34000", CardNumber = "1234567891234567", Expiration = "12/22", CVV = "123", PaymentMethod = 1, CardName = "X", TotalPrice = 350 }
             };
         }
     }
