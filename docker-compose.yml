@@ -58,6 +58,14 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
 
+  ordering.api:
+    image: ${DOCKER_REGISTRY-}orderingapi
+    build:
+      context: .
+      dockerfile: Services/Ordering/Ordering.API/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+
 volumes:
   mongo_data:
     name: mongo_data
