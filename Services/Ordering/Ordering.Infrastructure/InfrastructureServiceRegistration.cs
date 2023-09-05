@@ -19,16 +19,33 @@ namespace Ordering.Infrastructure
     {
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
+            var connectionString = buildConnectionString(configuration);
+            
             services.AddDbContext<OrderContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("OrderingConnectionString")));
+                options.UseSqlServer(connectionString));
 
             services.AddScoped(typeof(IRepositoryBase<>), typeof(RepositoryBase<>));
             services.AddScoped<IOrderRepository, OrderRepository>();
 
-            services.Configure<EmailSetting>(configuration.GetSection("EmailSetting"));
+            services.Configure<EmailSetting>(c =>
+            {
+                configuration.GetSection("EmailSetting").Bind(c);
+                c.ApiKey = c.ApiKey ?? configuration.GetValue<string>("API_KEY");
+            });
+
             services.AddTransient<IEmailService, EmailService>();
 
             return services;
+        }
+
+        private static string buildConnectionString(IConfiguration configuration)
+        {
+            var dbHost = configuration.GetValue<string>("DB_HOST");
+            var dbName = configuration.GetValue<string>("DB_NAME");
+            var dbUserId = configuration.GetValue<string>("DB_USER_ID");
+            var dbPassword = configuration.GetValue<string>("DB_PASSWORD");
+
+            return $"Server={dbHost};Database={dbName};User Id={dbUserId};Password={dbPassword}; TrustServerCertificate=true";
         }
     }
 }

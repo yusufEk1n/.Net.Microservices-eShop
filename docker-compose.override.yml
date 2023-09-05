@@ -114,7 +114,10 @@ services:
   ordering.api:
     container_name: ordering.api
     environment:
-      - "ConnectionStrings:OrderingConnectionString=Server=orderdb;Database=OrderDb;User Id=sa;Password=SwN12345678; TrustServerCertificate=True"
+      - DB_HOST=orderdb
+      - DB_NAME=OrderDb
+      - DB_USER_ID=sa
+      - DB_PASSWORD=SwN12345678
     depends_on:
       - orderdb
     ports:
