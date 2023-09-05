@@ -34,7 +34,7 @@ namespace Ordering.Infrastructure.Mail
 
             var from = new EmailAddress
             {
-                Email = _emailSetting.FromAdress,
+                Email = _emailSetting.FromAddress,
                 Name = _emailSetting.FromName
             };
 

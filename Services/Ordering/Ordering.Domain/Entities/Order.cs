@@ -16,8 +16,8 @@ namespace Ordering.Domain.Entities
         // Billing Adress
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string EmailAdress { get; set; }
-        public string AdressLine { get; set; }
+        public string EmailAddress { get; set; }
+        public string AddressLine { get; set; }
         public string Country { get; set; }
         public string State { get; set; }
         public string Zipcode { get; set; }
