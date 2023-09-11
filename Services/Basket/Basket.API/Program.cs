@@ -3,7 +3,7 @@ using Basket.API.Repositories;
 using Basket.API.Repositories.Interfaces;
 using Discount.Grpc.Protos;
 using DotNetEnv;
-using Microsoft.Extensions.Configuration;
+using MassTransit;
 using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,6 +30,15 @@ builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(
     c.Address = new Uri(builder.Configuration["GrpcSettings:DiscountUrl"]);
 });
 builder.Services.AddScoped<DiscountGrpcService>();
+builder.Services.AddAutoMapper(typeof(Program));
+
+builder.Services.AddMassTransit(configure =>
+{
+    configure.UsingRabbitMq((ctx, cfg) =>
+    {
+        cfg.Host(builder.Configuration["EventBusSettings:HostAddress"]);
+    });
+});
 
 var app = builder.Build();
 
