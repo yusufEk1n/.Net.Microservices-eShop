@@ -87,8 +87,10 @@ services:
       - REDIS_HOST=basketdb
       - REDIS_PORT=6379
       - "GrpcSettings:DiscountUrl=http://discount.grpc"
+      - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
     depends_on:
       - basketdb
+      - rabbitmq
     ports:
       - "8002:80"
 
@@ -125,7 +127,10 @@ services:
       - DB_NAME=OrderDb
       - DB_USER_ID=sa
       - DB_PASSWORD=SwN12345678
+      - API_KEY=example
+      - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
     depends_on:
       - orderdb
+      - rabbitmq
     ports:
       - "8005:80"
