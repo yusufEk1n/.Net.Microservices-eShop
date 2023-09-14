@@ -72,6 +72,14 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
 
+  shopping.aggregator:
+    image: ${DOCKER_REGISTRY-}shoppingaggregator
+    build:
+      context: .
+      dockerfile: ApiGateways/Shopping.Aggregator/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+
 volumes:
   mongo_data:
     name: mongo_data
