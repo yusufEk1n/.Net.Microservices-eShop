@@ -35,7 +35,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventBus.Messages", "Buildi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateways", "ApiGateways", "{B2BC048C-D3AB-4A04-9EB9-89DEF2267699}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OcelotApiGateway", "ApiGateways\OcelotApiGateway\OcelotApiGateway.csproj", "{B7EAE699-55EB-471F-A509-4177D7696981}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OcelotApiGateway", "ApiGateways\OcelotApiGateway\OcelotApiGateway.csproj", "{B7EAE699-55EB-471F-A509-4177D7696981}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopping.Aggregator", "ApiGateways\Shopping.Aggregator\Shopping.Aggregator.csproj", "{D67728FD-886A-425B-864C-23D0ECEA3BA2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -83,6 +85,10 @@ Global
 		{B7EAE699-55EB-471F-A509-4177D7696981}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7EAE699-55EB-471F-A509-4177D7696981}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B7EAE699-55EB-471F-A509-4177D7696981}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D67728FD-886A-425B-864C-23D0ECEA3BA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D67728FD-886A-425B-864C-23D0ECEA3BA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D67728FD-886A-425B-864C-23D0ECEA3BA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D67728FD-886A-425B-864C-23D0ECEA3BA2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -102,6 +108,7 @@ Global
 		{6A7ACB94-C209-4272-A102-FDF684C16A60} = {8A7CFBD7-951E-41A1-9BF4-D05E9809F0D5}
 		{4586CBC1-4329-4404-ABC3-7FF56357CDF3} = {3DCB8BB5-8B1E-4ED9-B35F-7F1CB49FF5AB}
 		{B7EAE699-55EB-471F-A509-4177D7696981} = {B2BC048C-D3AB-4A04-9EB9-89DEF2267699}
+		{D67728FD-886A-425B-864C-23D0ECEA3BA2} = {B2BC048C-D3AB-4A04-9EB9-89DEF2267699}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C284ED08-EE39-4DBA-A8CA-DB7D0DF9F7AE}
