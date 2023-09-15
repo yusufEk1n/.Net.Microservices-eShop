@@ -80,6 +80,16 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
 
+
+  client.app:
+    image: ${DOCKER_REGISTRY-}clientapp
+    build:
+      context: .
+      dockerfile: Web/ClientApp/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+
+
 volumes:
   mongo_data:
     name: mongo_data

@@ -158,3 +158,13 @@ services:
       - ordering.api
     ports:
       - "8006:80"
+
+
+  client.app:
+    container_name: client.app
+    environment:
+      - "ApiSettings:GatewayAddress=http://ocelotapigw"
+    depends_on:
+      - ocelotapigw
+    ports:
+      - "8007:80"
