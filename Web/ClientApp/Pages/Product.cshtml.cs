@@ -1,29 +1,47 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using ClientApp.Models;
 using ClientApp.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace ClientApp.Pages
+namespace ClientApp
 {
-    public class IndexModel : PageModel
+    public class ProductModel : PageModel
     {
         private readonly ICatalogService _catalogService;
         private readonly IBasketService _basketService;
 
-        public IndexModel(ICatalogService catalogService, IBasketService basketService)
+        public ProductModel(ICatalogService catalogService, IBasketService basketService)
         {
             _catalogService = catalogService ?? throw new ArgumentNullException(nameof(catalogService));
             _basketService = basketService ?? throw new ArgumentNullException(nameof(basketService));
         }
 
+        public IEnumerable<string> CategoryList { get; set; } = new List<string>();
         public IEnumerable<CatalogModel> ProductList { get; set; } = new List<CatalogModel>();
 
-        public async Task<IActionResult> OnGetAsync()
+
+        [BindProperty(SupportsGet = true)]
+        public string SelectedCategory { get; set; }
+
+        public async Task<IActionResult> OnGetAsync(string categoryName)
         {
-            ProductList = await _catalogService.GetCatalog();
+            var productList = await _catalogService.GetCatalog();
+            CategoryList = productList.Select(p => p.Category).Distinct();
+
+            if (!string.IsNullOrWhiteSpace(categoryName))
+            {
+                ProductList = productList.Where(p => p.Category == categoryName);
+                SelectedCategory = categoryName;
+            }
+            else
+            {
+                ProductList = productList;
+            }
+
             return Page();
         }
 
@@ -43,7 +61,8 @@ namespace ClientApp.Pages
                 Color = "Black"
             });
 
-            await _basketService.UpdateBasket(basket);
+            var basketUpdated = await _basketService.UpdateBasket(basket);
+
             return RedirectToPage("Cart");
         }
     }

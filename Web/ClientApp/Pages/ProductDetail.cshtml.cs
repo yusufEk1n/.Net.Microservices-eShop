@@ -1,29 +1,43 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using ClientApp.Models;
 using ClientApp.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace ClientApp.Pages
+namespace ClientApp
 {
-    public class IndexModel : PageModel
+    public class ProductDetailModel : PageModel
     {
         private readonly ICatalogService _catalogService;
         private readonly IBasketService _basketService;
 
-        public IndexModel(ICatalogService catalogService, IBasketService basketService)
+        public ProductDetailModel(ICatalogService catalogService, IBasketService basketService)
         {
             _catalogService = catalogService ?? throw new ArgumentNullException(nameof(catalogService));
             _basketService = basketService ?? throw new ArgumentNullException(nameof(basketService));
         }
 
-        public IEnumerable<CatalogModel> ProductList { get; set; } = new List<CatalogModel>();
+        public CatalogModel Product { get; set; }
 
-        public async Task<IActionResult> OnGetAsync()
+        [BindProperty]
+        public string Color { get; set; }
+
+        [BindProperty]
+        public int Quantity { get; set; }
+
+        public async Task<IActionResult> OnGetAsync(string productId)
         {
-            ProductList = await _catalogService.GetCatalog();
+            if (productId == null)
+            {
+                return NotFound();
+            }
+
+            Product = await _catalogService.GetCatalog(productId);
+            if (Product == null)
+            {
+                return NotFound();
+            }
             return Page();
         }
 
@@ -39,11 +53,12 @@ namespace ClientApp.Pages
                 ProductId = productId,
                 ProductName = product.Name,
                 Price = product.Price,
-                Quantity = 1,
-                Color = "Black"
+                Quantity = Quantity,
+                Color = Color
             });
 
             await _basketService.UpdateBasket(basket);
+
             return RedirectToPage("Cart");
         }
     }
