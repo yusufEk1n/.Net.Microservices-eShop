@@ -15,6 +15,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//Adding redis configuration to services...
 builder.Services.AddStackExchangeRedisCache(options =>
 {
     Env.Load();
@@ -23,15 +24,19 @@ builder.Services.AddStackExchangeRedisCache(options =>
                 $"{Environment.GetEnvironmentVariable("REDIS_HOST")}:{Environment.GetEnvironmentVariable("REDIS_PORT")}");
     options.ConfigurationOptions = redisConfiguration;
 });
+
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 
+//Add grpc client to services for consumer
 builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(c =>
 {
     c.Address = new Uri(builder.Configuration["GrpcSettings:DiscountUrl"]);
 });
+
 builder.Services.AddScoped<DiscountGrpcService>();
 builder.Services.AddAutoMapper(typeof(Program));
 
+//RabbitMQ is added to services under the MassTransit
 builder.Services.AddMassTransit(configure =>
 {
     configure.UsingRabbitMq((ctx, cfg) =>

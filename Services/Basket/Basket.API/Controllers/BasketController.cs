@@ -41,6 +41,7 @@ namespace Basket.API.Controllers
         [ProducesResponseType(typeof(ShoppingCart), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<ShoppingCart>> UpdateBasket([FromBody] ShoppingCart basket)
         {
+            //Get discount amount for each items in the basket
             foreach (var item in basket.Items)
             {
                 var coupon = await _discountGrpcService.GetDiscount(item.ProductName);
@@ -71,9 +72,11 @@ namespace Basket.API.Controllers
                 return BadRequest();
             }
 
+            //Create basket event
             var eventMessage = _mapper.Map<BasketCheckoutEvent>(basketCheckout);
             eventMessage.TotalPrice = basket.TotalPrice;
 
+            //Added basket event to queue
             await _publishEndpoint.Publish(eventMessage);
 
             await _repository.DeleteBasket(basket.UserName);

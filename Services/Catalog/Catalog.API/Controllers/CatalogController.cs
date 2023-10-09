@@ -1,4 +1,3 @@
-
 using System.Net;
 using Catalog.API.Entities;
 using Catalog.API.Repositories.Interfaces;

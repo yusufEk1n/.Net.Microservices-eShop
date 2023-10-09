@@ -11,6 +11,11 @@ namespace Basket.API.GrpcServices
             _discountProtoServiceClient = discountProtoServiceClient;
         }
 
+        /// <summary>
+        /// Gets the discount for a given product name
+        /// </summary>
+        /// <param name="productName">user name argument</param>
+        /// <returns>The <see cref="CouponModel"/>.</returns>
         public async Task<CouponModel> GetDiscount(string productName)
         {
             var discountRequest = new GetDiscountRequest { ProductName = productName };
