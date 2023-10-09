@@ -4,10 +4,23 @@ using Polly;
 
 namespace Discount.API.Extensions
 {
+    /// <summary>
+    /// Host extension class used to migrate the database
+    /// </summary>
     public static class HostExtensions
     {
-        public static IHost MigrateDatabase<TContext>(this IHost host)
+        /// <summary>
+        /// Migrate the database
+        /// </summary>
+        /// <param name="host">Host</param>
+        /// <returns>Host</returns>
+        public static IHost MigrateDatabase<TContext>(this IHost host) //"this IHost host" this code expands the IHost class
         {
+            /*
+            --- create service scope for store the migration logs record ---
+            --- use 5 times retry policy ---
+            --- execute the migration ---
+            */
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
@@ -37,6 +50,10 @@ namespace Discount.API.Extensions
             }
         }
 
+        /// <summary>
+        /// Execute the migration
+        /// </summary>
+        /// <returns></returns>
         private static void ExecuteMigrations()
         {
             string connectionString = BuildConnectionString();
@@ -68,6 +85,10 @@ namespace Discount.API.Extensions
             connection.Close();
         }
 
+        /// <summary>
+        /// Build the connection string
+        /// </summary>
+        /// <returns>Connection string</returns>
         private static string BuildConnectionString()
         {
             var dbHost = Environment.GetEnvironmentVariable("POSTGRES_HOST");

@@ -6,6 +6,9 @@ using Grpc.Core;
 
 namespace Discount.Grpc.Services
 {
+    /// <summary>
+    /// Discount service used to handle gRPC requests.
+    /// </summary>
     public class DiscountService : DiscountProtoService.DiscountProtoServiceBase
     {
         private readonly ILogger<DiscountService> _logger;

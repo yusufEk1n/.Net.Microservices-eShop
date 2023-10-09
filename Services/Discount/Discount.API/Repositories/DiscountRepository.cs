@@ -5,16 +5,21 @@ using Npgsql;
 
 namespace Discount.API.Repositories
 {
+    /// <summary>
+    /// The discount repository used to interact with the postqres database.
+    /// </summary>
     public class DiscountRepository : IDiscountRepository
     {
         public async Task<Coupon> GetDiscount(string productName)
         {
             string connectionString = BuildConnectionString();
             using var connection = new NpgsqlConnection(connectionString);
-
+               
+            //
             var coupon = await connection.QueryFirstOrDefaultAsync<Coupon>
                 ("SELECT * FROM Coupon WHERE ProductName = @productName", new { ProductName = productName });
 
+            //if coupon is null, return a new coupon with no discount
             return coupon == null ? new Coupon { ProductName = "No Discount", Amount = 0, Description = "No Discount Desc" }
                                   : coupon;       
         }
@@ -54,6 +59,10 @@ namespace Discount.API.Repositories
             return couponDeleted == 1 ? true : false;
         }
 
+        /// <summary>
+        /// Builds the connection string to connect to the postgres database.
+        /// </summary>
+        /// <returns>The connection string.</returns>
         private string BuildConnectionString()
         {
             var dbHost = Environment.GetEnvironmentVariable("POSTGRES_HOST");

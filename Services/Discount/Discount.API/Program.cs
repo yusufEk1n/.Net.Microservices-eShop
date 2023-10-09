@@ -12,12 +12,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//Add discountrepository to service...
 builder.Services.AddScoped<IDiscountRepository, DiscountRepository>();
 
 var app = builder.Build();
 
 Env.Load();
 
+//Migrate postqres database
 app.MigrateDatabase<Program>();
 
 // Configure the HTTP request pipeline.
