@@ -3,8 +3,16 @@ using MongoDB.Driver;
 
 namespace Catalog.API.Data
 {
+    /// <summary>
+    /// The CatalogContextSeed used to seed the data to the database.
+    /// </summary>
     public class CatalogContextSeed
     {
+        /// <summary>
+        /// Seed the data to the database.
+        /// </summary>
+        /// <param name="products">The products collection.</param>
+        /// <returns></returns>
         public static void SeedData(IMongoCollection<Product> products)
         {
             //Are there any records?
@@ -17,6 +25,10 @@ namespace Catalog.API.Data
             }
         }
 
+        /// <summary>
+        /// Get the preconfigured products.
+        /// </summary>
+        /// <returns>The <see cref="IEnumerable{Product}"/> of products.</returns>
         private static IEnumerable<Product> GetPreconfiguredProducts()
         {
             return new List<Product>()

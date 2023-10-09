@@ -5,6 +5,9 @@ using MongoDB.Driver;
 
 namespace Catalog.API.Repositories
 {
+    /// <summary>
+    /// The Product Repository used for interacting with the Mongo Database
+    /// </summary>
     public class ProductRepository : IProductRepository
     {
         private readonly ICatalogContext _context;

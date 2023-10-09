@@ -5,8 +5,12 @@ using MongoDB.Driver;
 
 namespace Catalog.API.Data
 {
+    /// <summary>
+    /// The CatalogContext used for connection database and manage collections.
+    /// </summary>
     public class CatalogContext : ICatalogContext
     {
+        //The database connection string is constructed with encrypted or unencrypted information
         private enum ConnectionType
         {
             Unencrypted,
@@ -28,6 +32,9 @@ namespace Catalog.API.Data
             CatalogContextSeed.SeedData(Products);
         }
 
+        /// <summary>
+        /// Initialize environment variables from .env file
+        /// </summary>
         private void InitializeEnvironmentVariables()
         {
             try
@@ -40,7 +47,12 @@ namespace Catalog.API.Data
             }
         }
 
-        //The database connection string is constructed with encrypted or unencrypted information
+        /// <summary>
+        /// Build connection string with given connection type
+        /// </summary>
+        /// <param name="connectionType">Connection type</param>
+        /// <returns>Connection string</returns>
+        /// <exception cref="ArgumentException">Throws when connection type is invalid</exception>
         private string BuildConnectionString(ConnectionType connectionType)
         {
             //Get necessary variables from .env file
