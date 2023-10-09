@@ -19,10 +19,12 @@ namespace Catalog.API.Data
             InitializeEnvironmentVariables();
             var connectionString = BuildConnectionString(ConnectionType.Unencrypted);
 
+            //Created new mongo client instance
             var client = new MongoClient(connectionString);
             var database = client.GetDatabase(Environment.GetEnvironmentVariable("DB_NAME"));
             Products = database.GetCollection<Product>(Environment.GetEnvironmentVariable("DB_COLLECTION_NAME"));
 
+            //Initialize some seed data
             CatalogContextSeed.SeedData(Products);
         }
 
@@ -38,8 +40,10 @@ namespace Catalog.API.Data
             }
         }
 
+        //The database connection string is constructed with encrypted or unencrypted information
         private string BuildConnectionString(ConnectionType connectionType)
         {
+            //Get necessary variables from .env file
             var dbHost = Environment.GetEnvironmentVariable("DB_HOST");
             var dbPort = Environment.GetEnvironmentVariable("DB_PORT");
             var dbName = Environment.GetEnvironmentVariable("DB_NAME");

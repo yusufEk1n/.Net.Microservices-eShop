@@ -82,6 +82,7 @@ namespace Catalog.API.Controllers
         {
             await _repository.CreateProduct(product);
 
+            //invoke GetProductById method with id parameter.
             return CreatedAtRoute("GetProduct", new { id = product.Id }, product);
         }
         

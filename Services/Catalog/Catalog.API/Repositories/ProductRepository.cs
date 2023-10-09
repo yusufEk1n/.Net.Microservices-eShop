@@ -34,6 +34,7 @@ namespace Catalog.API.Repositories
 
         public async Task<IEnumerable<Product>> GetProductByName(string productName)
         {
+            //defined Productfilter that compares the name value of each record
             FilterDefinition<Product> filter = Builders<Product>.Filter.Eq(p => p.Name, productName);
 
             return await _context
@@ -65,6 +66,7 @@ namespace Catalog.API.Repositories
                                         .Products
                                         .ReplaceOneAsync(p => p.Id == product.Id, product);
 
+            //True updated is succesfully otherwise false
             return updateProduct.IsAcknowledged && updateProduct.ModifiedCount > 0;
         }
 
