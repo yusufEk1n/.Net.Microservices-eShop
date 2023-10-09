@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace Ordering.Infrastructure.Persistence
 {
+    /// <summary>
+    /// Order context class used for database operations
+    /// </summary>
     public class OrderContext : DbContext
     {
         public OrderContext(DbContextOptions<OrderContext> options) : base(options)
@@ -17,6 +20,11 @@ namespace Ordering.Infrastructure.Persistence
 
         public DbSet<Order> Orders { get; set; }
 
+        /// <summary>
+        /// Override SaveChangesAsync method to add audit information
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns> <see cref="int"/> </returns>
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             foreach (var entry in ChangeTracker.Entries<EntityBase>()) 

@@ -4,14 +4,12 @@ using Microsoft.Extensions.Logging;
 using Ordering.Application.Contracts.Persistence;
 using Ordering.Application.Excepitons;
 using Ordering.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Ordering.Application.Features.Orders.Commands.UpdateOrder
 {
+    /// <summary>
+    /// Updated order command handler used to update order
+    /// </summary>
     public class UpdateOrderCommandHandler : IRequestHandler<UpdateOrderCommand>
     {
         private readonly IOrderRepository _orderRepository;
@@ -27,6 +25,11 @@ namespace Ordering.Application.Features.Orders.Commands.UpdateOrder
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
+        /// <summary>
+        /// Handle method used to update order
+        /// </summary>
+        /// <param name="request">Update order command</param>
+        /// <param name="cancellationToken">Cancellation token</param>
         public async Task<Unit> Handle(UpdateOrderCommand request, CancellationToken cancellationToken)
         {
             var orderToUpdate = await _orderRepository.GetByIdAsync(request.Id);

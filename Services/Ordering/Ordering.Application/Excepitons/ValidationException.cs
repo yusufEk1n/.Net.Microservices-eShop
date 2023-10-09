@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Ordering.Application.Excepitons
 {
+    /// <summary>
+    /// Validation Exception class used for throwing custom exception
+    /// </summary>
     public class ValidationException : ApplicationException
     {
         public ValidationException()
@@ -23,6 +26,7 @@ namespace Ordering.Application.Excepitons
                 .ToDictionary(failureGroup => failureGroup.Key, failureGroup => failureGroup.ToArray());
         }
 
+        //Dictionary of errors
         public Dictionary<string, string[]> Errors { get; }
     }
 }

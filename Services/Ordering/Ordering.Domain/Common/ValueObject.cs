@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Ordering.Domain.Common
+﻿namespace Ordering.Domain.Common
 {
     public abstract class ValueObject
     {
+        /// <summary>
+        /// check if two value objects are equal
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns>bool</returns>
         protected static bool EqualOperator(ValueObject left, ValueObject right)
         {
             if ((left is null) ^ (right is null))
@@ -18,13 +18,28 @@ namespace Ordering.Domain.Common
             return ReferenceEquals(left, null) || left.Equals(right);
         }
 
+        /// <summary>
+        /// check if two value objects are not equal
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns>bool</returns>
         protected static bool NotEqualOperator(ValueObject left, ValueObject right)
         {
             return !(EqualOperator(left, right));
         }
 
+        /// <summary>
+        /// get all the properties of the value object
+        /// </summary>
+        /// <returns>IEnumerable<object></returns>
         protected abstract IEnumerable<object> GetEqualityComponents();
 
+        /// <summary>
+        /// check if two value objects are equal
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns>bool</returns>
         public override bool Equals(object obj)
         {
             if (obj is null || obj.GetType() != GetType())
@@ -36,6 +51,10 @@ namespace Ordering.Domain.Common
             return GetEqualityComponents().SequenceEqual(other.GetEqualityComponents());
         }
 
+        /// <summary>
+        /// get the hash code of aggregated properties
+        /// </summary>
+        /// <returns>int</returns>
         public override int GetHashCode()
         {
             return GetEqualityComponents()

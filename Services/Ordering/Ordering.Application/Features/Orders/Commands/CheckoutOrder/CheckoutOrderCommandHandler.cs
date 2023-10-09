@@ -5,14 +5,12 @@ using Ordering.Application.Contracts.Infrastructure;
 using Ordering.Application.Contracts.Persistence;
 using Ordering.Application.Models;
 using Ordering.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Ordering.Application.Features.Orders.Commands.CheckoutOrder
 {
+    /// <summary>
+    /// Checkout order command handler used to handle the checkout order command.
+    /// </summary>
     public class CheckoutOrderCommandHandler : IRequestHandler<CheckoutOrderCommand, int>
     {
         private readonly IOrderRepository _orderRepository;
@@ -31,6 +29,12 @@ namespace Ordering.Application.Features.Orders.Commands.CheckoutOrder
             _logger = logger;
         }
 
+        /// <summary>
+        /// Handle the checkout order command.
+        /// </summary>
+        /// <param name="request">Checkout order command.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns>Order id.</returns>
         public async Task<int> Handle(CheckoutOrderCommand request, CancellationToken cancellationToken)
         {
             var newOrder = await _orderRepository.AddAsync(_mapper.Map<Order>(request));
@@ -40,6 +44,10 @@ namespace Ordering.Application.Features.Orders.Commands.CheckoutOrder
             return newOrder.Id;
         }
 
+        /// <summary>
+        /// Send mail async.
+        /// </summary>
+        /// <param name="order">Order.</param>
         private async Task SendMailAsync(Order order)
         {
             var email = new Email()

@@ -16,7 +16,7 @@ namespace Ordering.Infrastructure.Repositories
         protected readonly OrderContext _orderContext;
 
         public RepositoryBase(OrderContext orderContext)
-        {
+        {   
             _orderContext = orderContext ?? throw new ArgumentNullException(nameof(orderContext));
         }
 

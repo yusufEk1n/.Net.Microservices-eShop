@@ -1,14 +1,14 @@
 ﻿using Ordering.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Ordering.Application.Contracts.Persistence
 {
     public interface IOrderRepository : IRepositoryBase<Order>
     {
+        /// <summary>
+        /// Get orders by username
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns> The <see cref="IEnumerable{Order}"/></returns>
         Task<IEnumerable<Order>> GetOrderByUserNameAsync(string userName);
     }
 }

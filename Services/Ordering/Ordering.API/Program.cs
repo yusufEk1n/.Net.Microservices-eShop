@@ -18,9 +18,11 @@ builder.Services.AddSwaggerGen();
 DotNetEnv.Env.Load();
 builder.Configuration.AddEnvironmentVariables();
 
+// Add application and infrastructure layer to our services container...
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 
+// Add consumer class to our services container
 builder.Services.AddScoped<BasketCheckoutConsumer>();
 builder.Services.AddAutoMapper(typeof(Program));
 

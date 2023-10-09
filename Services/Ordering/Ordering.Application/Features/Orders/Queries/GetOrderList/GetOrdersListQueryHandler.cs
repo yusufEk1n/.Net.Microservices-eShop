@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace Ordering.Application.Features.Orders.Queries.GetOrderList
 {
+    /// <summary>
+    /// Get order list query handler class used to handle the request
+    /// </summary>
     public class GetOrdersListQueryHandler : IRequestHandler<GetOrdersListQuery, List<OrdersVm>>
     {
         private readonly IOrderRepository _orderRepository;
@@ -21,6 +24,12 @@ namespace Ordering.Application.Features.Orders.Queries.GetOrderList
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
+        /// <summary>
+        /// Handle the request
+        /// </summary>
+        /// <param name="request">Get order list query</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns> The <see cref="List{OrdersVm}"/> </returns>
         public async Task<List<OrdersVm>> Handle(GetOrdersListQuery request, CancellationToken cancellationToken)
         {
             var orders = await _orderRepository.GetOrderByUserNameAsync(request.UserName);

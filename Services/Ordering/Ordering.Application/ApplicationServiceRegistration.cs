@@ -2,17 +2,19 @@
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Ordering.Application.Behaviours;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Ordering.Application
 {
+    /// <summary>
+    /// Application service registration
+    /// </summary>
     public static class ApplicationServiceRegistration
     {
+        /// <summary>
+        /// Add application services
+        /// </summary>
+        /// <param name="services"></param>
         public static IServiceCollection AddApplicationServices(this IServiceCollection services) 
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());

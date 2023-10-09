@@ -4,10 +4,23 @@ using Polly;
 
 namespace Ordering.API.Extensions
 {
+    /// <summary>
+    /// Host extension class used to migrate the database
+    /// </summary>
     public static class HostExtensions
     {
+        /// <summary>
+        /// Migrate the database
+        /// </summary>
+        /// <param name="host">Host</param>
+        /// <param name="seeder">Seeder function</param>
         public static IHost MigrateDatabase<TContext>(this IHost host, Action<TContext, IServiceProvider> seeder) where TContext : DbContext
         {
+            /*
+            --- create service scope for store the migration logs record ---
+            --- use 5 times retry policy ---
+            --- execute the migration ---
+            */
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
@@ -41,6 +54,12 @@ namespace Ordering.API.Extensions
             return host;
         }
 
+        /// <summary>
+        /// Invoke the seeder function
+        /// </summary>
+        /// <param name="seeder">Seeder function</param>
+        /// <param name="context">Context</param>
+        /// <param name="services">Services</param>
         private static void InvokeSeeder<TContext>(Action<TContext, IServiceProvider> seeder, TContext context, IServiceProvider services)
             where TContext : DbContext
         {

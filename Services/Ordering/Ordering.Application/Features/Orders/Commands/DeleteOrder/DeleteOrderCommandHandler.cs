@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace Ordering.Application.Features.Orders.Commands.DeleteOrder
 {
+    /// <summary>
+    /// Delete order command used to delete an order
+    /// </summary>
     public class DeleteOrderCommandHandler : IRequestHandler<DeleteOrderCommand>
     {
         private readonly IOrderRepository _orderRepository;
@@ -22,6 +25,12 @@ namespace Ordering.Application.Features.Orders.Commands.DeleteOrder
             _logger = logger;
         }
 
+        /// <summary>
+        /// Handle the delete order command
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<Unit> Handle(DeleteOrderCommand request, CancellationToken cancellationToken)
         {
             var orderToDelete = await _orderRepository.GetByIdAsync(request.Id);

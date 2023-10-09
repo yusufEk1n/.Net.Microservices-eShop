@@ -15,8 +15,14 @@ using System.Threading.Tasks;
 
 namespace Ordering.Infrastructure
 {
+    /// <summary>
+    /// Adds Infrastructure Services
+    /// </summary>
     public static class InfrastructureServiceRegistration
     {
+        /// <summary>
+        /// Add Infrastructure Services
+        /// </summary>
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
             var connectionString = buildConnectionString(configuration);
@@ -38,6 +44,11 @@ namespace Ordering.Infrastructure
             return services;
         }
 
+        /// <summary>
+        /// Build Connection String
+        /// </summary>
+        /// <param name="configuration"></param>
+        /// <returns> Connection String </returns>
         private static string buildConnectionString(IConfiguration configuration)
         {
             var dbHost = configuration.GetValue<string>("DB_HOST");

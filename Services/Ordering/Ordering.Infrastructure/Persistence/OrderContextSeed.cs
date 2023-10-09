@@ -8,8 +8,16 @@ using System.Threading.Tasks;
 
 namespace Ordering.Infrastructure.Persistence
 {
+    /// <summary>
+    /// Order context seed class used to seed data for order context
+    /// </summary>
     public class OrderContextSeed
     {
+        /// <summary>
+        /// Seed data for order context
+        /// </summary>
+        /// <param name="context">Order context</param>
+        /// <param name="logger">Logger</param>
         public static async Task SeedAsync(OrderContext context, ILogger<OrderContextSeed> logger)
         {
             if (!context.Orders.Any())
@@ -20,6 +28,10 @@ namespace Ordering.Infrastructure.Persistence
             }
         }
 
+        /// <summary>
+        /// Get pre configured orders
+        /// </summary>
+        /// <returns>The <see cref="IEnumerable{Order}"/></returns>
         private static IEnumerable<Order> GetPreConfiguredOrders()
         {
             return new List<Order>

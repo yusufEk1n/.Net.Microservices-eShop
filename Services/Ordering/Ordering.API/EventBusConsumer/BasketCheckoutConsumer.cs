@@ -6,6 +6,9 @@ using Ordering.Application.Features.Orders.Commands.CheckoutOrder;
 
 namespace Ordering.API.EventBusConsumer
 {
+    /// <summary>
+    /// Basket checkout consumer class used to consume the BasketCheckoutEvent
+    /// </summary>
     public class BasketCheckoutConsumer : IConsumer<BasketCheckoutEvent>
     {
         private readonly IMapper _mapper;
@@ -19,6 +22,11 @@ namespace Ordering.API.EventBusConsumer
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
         }
+
+        /// <summary>
+        /// Consume method used to consume the BasketCheckoutEvent
+        /// </summary>
+        /// <param name="context">BasketCheckoutEvent</param>
         public async Task Consume(ConsumeContext<BasketCheckoutEvent> context)
         {
             var command = _mapper.Map<CheckoutOrderCommand>(context.Message);
